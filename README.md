@@ -1,4 +1,4 @@
-# 💳 Gerenciador de Cartões
+# 💳 NexCard gerenciador de Cartões
 
 ## 📖 Sobre o Projeto
 
