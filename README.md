@@ -10,6 +10,15 @@ Como diferencial, o projeto disponibiliza um **Cartão Virtual Interativo**, com
 
 ---
 
+# 👥 Integrantes da Equipe
+
+Este projeto foi desenvolvido pelos seguintes integrantes:
+
+- **Audrin Lucio**
+- **Pyetro Sabaraense**
+- **Ernani Ferreira**
+- **Italo Rocha**
+
 ## 🎯 Objetivo
 
 Desenvolver uma aplicação mobile utilizando **Kotlin** e **Jetpack Compose**, aplicando conceitos de:
