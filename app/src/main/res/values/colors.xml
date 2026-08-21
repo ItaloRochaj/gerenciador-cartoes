@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_primary">#6A1FBF</color>
+    <color name="purple_dark">#31005C</color>
+    <color name="purple_light">#A75CFF</color>
+    <color name="black_card">#171717</color>
+    <color name="gray_background">#F5F5F7</color>
+    <color name="gray_field">#EEEEF0</color>
+    <color name="white">#FFFFFF</color>
+    <color name="success_green">#2E7D32</color>
+    <color name="error_red">#C62828</color>
+</resources>

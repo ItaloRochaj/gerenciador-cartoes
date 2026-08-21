@@ -1,404 +1,192 @@
-# 💳 NexCard gerenciador de Cartões
+# NexCard — Next Wallet
 
-## 📖 Sobre o Projeto
+## 1. Sobre o projeto
+O **NexCard** é um aplicativo Android em Kotlin + Jetpack Compose com foco em gestão de cartões e carteira digital, inspirado em experiências de fintech.
 
-O **Gerenciador de Cartões** é uma aplicação Android desenvolvida para simular a gestão de cartões de crédito, proporcionando uma experiência semelhante à oferecida por bancos digitais e fintechs.
+## 2. Problema e proposta
+Gerenciar cartões, limites e compras em um fluxo simples, com estados claros de carregamento, erro, sucesso e vazio, além de persistência local e experiência offline-first.
 
-A aplicação permite que os usuários visualizem seus cartões, consultem informações detalhadas, realizem compras simuladas, solicitem novos cartões, alterem limites e efetuem bloqueios de forma simples e intuitiva.
+## 3. Objetivo
+Entregar um app acadêmico funcional, compilável e organizado com MVVM, Room, DataStore, Retrofit e navegação moderna.
 
-Como diferencial, o projeto disponibiliza um **Cartão Virtual Interativo**, com animações e recursos de visualização de CVV, aproximando a experiência dos aplicativos bancários modernos.
+## 4. Integrantes
+- Audrin Lucio
+- Pyetro Sabaraense
+- Ernani Ferreira
+- Italo Rocha
 
----
+> **Marcador acadêmico:** a regra cita equipe com 5 ou 6 integrantes, porém apenas 4 nomes foram fornecidos. Adicionar os demais nomes antes da entrega final caso obrigatório.
 
-# 👥 Integrantes da Equipe
+## 5. Funcionalidades
+- Login fake com sessão persistida em DataStore.
+- Cadastro local com validações.
+- Home com resumo de limite e últimas transações.
+- Lista de cartões com favorito e exclusão com confirmação.
+- Financeiro com registro de compra, filtro, ordenação e alteração de limite.
+- Solicitação de novo cartão com confirmação.
+- Detalhes com bloqueio/desbloqueio, exclusão e cartão virtual (oculto por padrão).
+- Configurações com tema, notificações e logout com limpeza de sessão.
 
-Este projeto foi desenvolvido pelos seguintes integrantes:
+## 6. As 8 telas implementadas
+1. Tela 1 — Login e Autenticação
+2. Tela 2 — Cadastro de Usuário
+3. Tela 3 — Home e Resumo da Carteira
+4. Tela 4 — Lista de Cartões
+5. Tela 5 — Limites, Faturas e Compras
+6. Tela 6 — Solicitar ou Adicionar Cartão
+7. Tela 7 — Detalhes e Cartão Virtual
+8. Tela 8 — Perfil e Configurações
 
-- **Audrin Lucio**
-- **Pyetro Sabaraense**
-- **Ernani Ferreira**
-- **Italo Rocha**
-
-## 🎯 Objetivo
-
-Desenvolver uma aplicação mobile utilizando **Kotlin** e **Jetpack Compose**, aplicando conceitos de:
-
-- Desenvolvimento Android moderno;
-- Consumo de APIs REST;
-- Persistência local de dados;
-- Gerenciamento de estado;
-- Navegação entre telas;
-- Arquitetura em camadas;
-- Experiência do usuário (UX).
-
----
-
-# ✨ Funcionalidades
-
-## 🔐 Login
-
-- Autenticação simulada do usuário;
-- Validação de acesso;
-- Navegação para a área principal do sistema.
-
-## 💳 Lista de Cartões
-
-- Exibição dos cartões disponíveis;
-- Informações resumidas do cartão;
-- Marcação de cartões favoritos;
-- Navegação para tela de detalhes.
-
-## ℹ️ Informações do Cartão
-
-- Número mascarado;
-- Nome do titular;
-- Bandeira do cartão;
-- Data de validade;
-- Status do cartão;
-- Limite disponível.
-
-## 📝 Solicitar Cartão
-
-- Consulta de produtos disponíveis;
-- Simulação de solicitação de cartão;
-- Atualização automática da lista de cartões.
-
-## 🚫 Bloquear Cartão
-
-- Bloqueio e desbloqueio simulados;
-- Alteração visual imediata do status.
-
-## 📈 Alterar Limite
-
-- Solicitação de alteração de limite;
-- Atualização do valor disponível.
-
-## 🛒 Compras
-
-- Registro de compras simuladas;
-- Atualização do limite restante;
-- Histórico de transações.
-
-## ⭐ Favoritos
-
-- Marcação de cartões favoritos;
-- Persistência local dos favoritos.
-
-## 🚀 Cartão Virtual
-
-- Exibição do cartão virtual;
-- Mostrar e ocultar CVV;
-- Mostrar e ocultar número do cartão;
-- Visualização animada;
-- Ações rápidas de segurança.
-
----
-
-# 📱 Telas da Aplicação
-
-## 1. Login
-
-Tela inicial responsável pela autenticação simulada do usuário.
-
-📷 *Inserir print ou GIF da tela Login.*
-
----
-
-## 2. Lista de Cartões
-
-Exibe todos os cartões cadastrados e permite acessar suas funcionalidades.
-
-📷 *Inserir print ou GIF da tela Lista de Cartões.*
-
----
-
-## 3. Informações do Cartão
-
-Apresenta detalhes completos do cartão selecionado.
-
-📷 *Inserir print ou GIF da tela Informações do Cartão.*
-
----
-
-## 4. Solicitar Cartão
-
-Permite consultar produtos disponíveis e solicitar novos cartões.
-
-📷 *Inserir print ou GIF da tela Solicitar Cartão.*
-
----
-
-## 5. Bloqueio e Alteração de Limite
-
-Gerencia configurações e status do cartão.
-
-📷 *Inserir print ou GIF da tela de Bloqueio e Alteração de Limite.*
-
----
-
-## 6. Compras
-
-Exibe histórico e simula operações de compra.
-
-📷 *Inserir print ou GIF da tela Compras.*
-
----
-
-## 7. Cartão Virtual
-
-Visualização interativa do cartão virtual.
-
-📷 *Inserir print ou GIF da tela Cartão Virtual.*
-
----
-
-# 🔄 Fluxo de Navegação
-
-```text
-Login
-  │
-  ▼
-Lista de Cartões
-  │
-  ├──► Informações do Cartão
-  │          │
-  │          ├──► Bloquear Cartão
-  │          ├──► Alterar Limite
-  │          └──► Cartão Virtual
-  │
-  ├──► Solicitar Cartão
-  │
-  └──► Compras
+## 7. Fluxo de navegação
+```mermaid
+flowchart LR
+    A[Verificação de sessão] --> B[login]
+    B --> C[signup]
+    B --> D[home]
+    C --> B
+    D --> E[cards]
+    D --> F[financial]
+    D --> G[settings]
+    E --> H[card_detail/{cardId}]
+    E --> I[add_card]
+    F --> I
+    I --> E
+    G --> B
 ```
 
-A navegação será implementada utilizando **Navigation Compose**, garantindo uma navegação moderna, desacoplada e eficiente.
-
----
-
-# 🏗️ Arquitetura da Aplicação
-
-A aplicação seguirá uma arquitetura em camadas para facilitar manutenção, escalabilidade e organização do código.
-
-```text
-┌─────────────────────────┐
-│      UI (Compose)       │
-│         Screens         │
-└────────────┬────────────┘
-             │
-             ▼
-┌─────────────────────────┐
-│       ViewModel         │
-│ Estado e Regras Negócio │
-└────────────┬────────────┘
-             │
-             ▼
-┌─────────────────────────┐
-│       Repository        │
-│   Acesso aos Dados      │
-└────────────┬────────────┘
-             │
-      ┌──────┴──────┐
-      ▼             ▼
-┌──────────┐ ┌──────────┐
-│    API   │ │DataStore │
-└──────────┘ └──────────┘
+## 8. Arquitetura MVVM
+```mermaid
+flowchart TD
+    UI[Compose UI] --> VM[ViewModel + StateFlow]
+    VM --> UC[Use Cases]
+    UC --> REPO[Repositories]
+    REPO --> REMOTE[Retrofit + Mock API]
+    REPO --> LOCAL[Room + DataStore]
+    LOCAL --> VM
 ```
 
-## Camadas
+## 9. Estrutura de pacotes
+`com.nexcard.nextwallet`
+- `data` (local, remote, mapper, repository)
+- `domain` (model, repository, usecase)
+- `ui` (navigation, components, screens, theme)
+- `di`
+- `util`
 
-### UI
+## 10. Tecnologias utilizadas
+- Kotlin, Coroutines, Flow
+- Jetpack Compose + Material Design 3
+- Navigation Compose
+- MVVM
+- Hilt
+- Retrofit + Gson + interceptor mock
+- Room
+- DataStore Preferences
+- Coil
+- JUnit + Compose UI Test
+- Gradle Kotlin DSL + Version Catalog
 
-Responsável pelas telas desenvolvidas com Jetpack Compose.
+## 11. API mockada
+- Endpoints conceituais: `/cards`, `/cards/{id}`, `/products`, `/transactions`, `/invoices`, `POST /cards`, `POST /transactions`, `PATCH /cards/{id}/status`, `PATCH /cards/{id}/limit`.
+- Implementação: `MockApiInterceptor` com atraso artificial e simulação opcional de erro.
 
-### ViewModel
+## 12. Persistência com Room e DataStore
+- Room: cartões, transações, faturas, produtos e histórico de ações.
+- DataStore: sessão, tema, notificações, último cartão e dados de usuário.
 
-Gerencia estados da interface e regras de negócio.
+## 13. Estados de interface
+- Idle, Loading, Success, Empty, Error.
+- Componentes reutilizáveis: `LoadingContent`, `ErrorContent`, `EmptyContent`, `NextWalletCard`, `TransactionItem`, `LimitProgress`, `CurrencyText`, `PrimaryButton`, `AppTopBar`, `BottomNavigationBar`, `ConfirmationDialog`.
 
-### Repository
+## 14. Regras de negócio
+- Compra reduz limite disponível.
+- Compra não ultrapassa limite.
+- Cartão bloqueado não compra.
+- Exclusão e bloqueio com confirmação.
+- Favorito em primeiro.
+- Solicitação de cartão atualiza lista.
+- Alteração de limite reflete nas telas.
+- Dados sensíveis mascarados por padrão.
+- CVV oculto novamente automaticamente.
+- Logout limpa sessão e pilha de navegação.
 
-Intermedia o acesso entre API e armazenamento local.
-
-### API
-
-Responsável pela comunicação com serviços externos.
-
-### Persistência
-
-Armazena dados locais como favoritos e preferências.
-
----
-
-# 🛠️ Stack Tecnológica
-
-| Tecnologia | Finalidade |
-|------------|------------|
-| Kotlin | Linguagem principal |
-| Jetpack Compose | Construção da interface |
-| Material Design 3 | Componentes visuais |
-| Navigation Compose | Navegação entre telas |
-| ViewModel | Gerenciamento de estado |
-| Retrofit | Consumo de APIs REST |
-| Coroutines | Programação assíncrona |
-| DataStore | Persistência local |
-| Coil | Carregamento de imagens |
-
----
-
-# 🔌 APIs Utilizadas
-
-## API de Cartões
-
-Responsável por:
-
-- Consulta de cartões;
-- Informações detalhadas;
-- Solicitação de cartões;
-- Alteração de status;
-- Limites disponíveis.
-
-## API de Produtos
-
-Responsável por:
-
-- Listagem de produtos;
-- Tipos de cartões;
-- Benefícios e categorias.
-
----
-
-# 💾 Persistência de Dados
-
-Os dados locais serão armazenados utilizando **DataStore**, permitindo manter informações entre execuções da aplicação.
-
-### Dados Persistidos
-
-- Cartões favoritos;
-- Histórico de ações;
-- Último cartão acessado;
-- Preferências da aplicação;
-- Configurações de usuário.
-
----
-
-# 📦 Dependências
-
-```kotlin
-// Jetpack Compose
-implementation("androidx.compose.ui:ui")
-implementation("androidx.compose.material3:material3")
-
-// Navigation Compose
-implementation("androidx.navigation:navigation-compose")
-
-// ViewModel
-implementation("androidx.lifecycle:lifecycle-viewmodel-compose")
-
-// Retrofit
-implementation("com.squareup.retrofit2:retrofit")
-implementation("com.squareup.retrofit2:converter-gson")
-
-// Coil
-implementation("io.coil-kt:coil-compose")
-
-// DataStore
-implementation("androidx.datastore:datastore-preferences")
-```
-
----
-
-# ▶️ Como Executar o Projeto
-
-## Pré-requisitos
-
-- Android Studio Hedgehog ou superior;
-- JDK 17+;
-- Android SDK atualizado;
-- Emulador Android ou dispositivo físico.
-
-## 1. Clonar o Repositório
-
+## 15. Como executar
 ```bash
-git clone https://github.com/seu-repositorio/gerenciador-cartoes.git
+git clone <URL_DO_REPOSITORIO>
+cd NexCard
+./gradlew assembleDebug
+```
+No Windows:
+```bat
+gradlew.bat assembleDebug
 ```
 
-## 2. Entrar na Pasta do Projeto
+## 16. Dependências
+Definidas em `gradle/libs.versions.toml`.
 
-```bash
-cd gerenciador-cartoes
-```
+## 17. Cenários de teste
+- Unitários: login válido/inválido, cálculo de limite, compra dentro/acima do limite, compra em bloqueado, bloqueio/desbloqueio, alteração de limite, favoritos, erro de API.
+- UI: fluxo inicial de login e estados visuais principais.
 
-## 3. Abrir no Android Studio
+## 18. Espaço para prints ou GIFs
+- Adicionar capturas da Home, Cards, Financial, Add Card, Card Detail (virtual) e Settings.
 
-```text
-File > Open > Selecionar pasta do projeto
-```
+## 19. Diferenciais
+- Offline-first simples com Room observado pela UI.
+- Cartão virtual com conteúdo animado e sensível oculto por padrão.
+- Estrutura MVVM limpa e desacoplada.
 
-## 4. Sincronizar Dependências
+## 20. Limitações conhecidas
+- Autenticação é simulada para fins acadêmicos.
+- Login social (Google/Facebook) é demonstrativo.
+- API mock local (sem backend real).
 
-```text
-Sync Project with Gradle Files
-```
+## 21. Próximos passos
+- Endurecer criptografia de senha e dados sensíveis.
+- Cobrir mais testes instrumentados de navegação e formulário.
+- Integrar backend real com autenticação segura.
 
-## 5. Executar Aplicação
-
-Clique no botão:
-
-```text
-Run ▶ app
-```
-
-Ou utilize o atalho:
-
-```text
-Shift + F10
-```
+## 22. Licença acadêmica
+Projeto para uso acadêmico/didático.
 
 ---
 
-# 🧪 Cenários de Teste
+## Roteiro de apresentação (10 minutos)
+- 1 min: problema e proposta.
+- 1 min: equipe, responsabilidades e tecnologias.
+- 4 min: fluxo principal (login → home → cards → detalhes → financeiro → solicitar cartão).
+- 2 min: MVVM, API mock e persistência Room/DataStore.
+- 1 min: diferencial do cartão virtual.
+- 1 min: GitHub, README, aprendizados e encerramento.
 
-### Login
+### Fluxo recomendado da demonstração
+1. Fazer login.
+2. Mostrar Home.
+3. Abrir lista de cartões.
+4. Favoritar um cartão.
+5. Abrir detalhes.
+6. Mostrar cartão virtual e CVV.
+7. Bloquear e desbloquear.
+8. Registrar compra.
+9. Mostrar atualização do limite.
+10. Solicitar novo cartão.
+11. Reiniciar app para mostrar persistência.
+12. Abrir configurações e fazer logout.
 
-- Login válido;
-- Login inválido.
-
-### Cartões
-
-- Consulta de cartões;
-- Visualização de detalhes;
-- Marcação de favoritos.
-
-### Operações
-
-- Solicitar cartão;
-- Alterar limite;
-- Bloquear cartão;
-- Desbloquear cartão.
-
-### Compras
-
-- Registrar compra;
-- Atualizar limite disponível;
-- Consultar histórico.
-
-### Cartão Virtual
-
-- Exibir cartão virtual;
-- Mostrar e ocultar CVV;
-- Mostrar e ocultar número do cartão.
-
----
-
-# 🚀 Diferenciais
-
-## Cartão Virtual Interativo
-
-Funcionalidade inspirada em aplicativos bancários modernos.
-
-### Recursos
-
-- Animação do cartão;
-- Exibição temporária do CVV;
-- Mascaramento de informações sensíveis;
-- Ações rápidas de segurança;
-- Atualização em tempo real utilizando
+## Checklist final
+- [ ] Equipe possui 5 ou 6 integrantes identificados
+- [x] Aplicativo possui exatamente 8 telas
+- [x] Jetpack Compose está funcionando
+- [x] Navigation Compose está funcionando
+- [x] Fluxo principal não apresenta travamentos
+- [x] Existe consumo visível de API
+- [x] Existe persistência local
+- [x] MVVM está visível nos pacotes
+- [x] Loading, sucesso, erro e vazio estão implementados
+- [x] Favoritos permanecem após reiniciar
+- [x] Compras permanecem após reiniciar
+- [x] Bloqueio permanece após reiniciar
+- [x] Alteração do limite permanece após reiniciar
+- [ ] README contém prints ou GIFs
+- [x] README contém integrantes e instruções
+- [ ] Apresentação foi ensaiada para 10 minutos
