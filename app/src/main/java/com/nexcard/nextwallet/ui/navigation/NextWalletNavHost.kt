@@ -138,6 +138,15 @@ fun NextWalletNavHost(
                 ),
             ) {
                 FinancialScreen(
+                    onBack = {
+                        val didPopToHome = navController.popBackStack(AppRoute.Home.route, inclusive = false)
+                        if (!didPopToHome) {
+                            navController.navigate(AppRoute.Home.route) {
+                                popUpTo(0) { inclusive = false }
+                                launchSingleTop = true
+                            }
+                        }
+                    },
                     onOpenConsolidated = { cardId, month ->
                         navController.navigate(AppRoute.Consolidated.create(cardId = cardId, month = month))
                     },
@@ -161,11 +170,9 @@ fun NextWalletNavHost(
             composable(AppRoute.AddCard.route) {
                 AddCardScreen(
                     onBack = { navController.popBackStack() },
-                    onRequested = {
-                        navController.navigate(AppRoute.Cards.route) {
-                            popUpTo(AppRoute.AddCard.route) { inclusive = true }
-                        }
-                    },
+                    onGoCards = { navController.navigate(AppRoute.Cards.route) },
+                    onGoFinancial = { navController.navigate(AppRoute.Financial.route) },
+                    onGoSettings = { navController.navigate(AppRoute.Settings.route) },
                 )
             }
             composable(

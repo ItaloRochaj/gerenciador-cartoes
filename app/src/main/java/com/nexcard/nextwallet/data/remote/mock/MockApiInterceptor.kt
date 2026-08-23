@@ -143,6 +143,7 @@ object MockApiState {
     )
 
     val products = mutableListOf(
+        CardProductDto("product_wave26", "Next Wave", "VISA", "Premium", 0, DEFAULT_CARD_LIMIT_CENTS, listOf("Sem anuidade", "Limite inicial de R$ 20.000"), "purple_wave_26"),
         CardProductDto("product_black", "Next Black", "VISA", "Premium", 0, DEFAULT_CARD_LIMIT_CENTS, listOf("Cashback 1.5%", "Sala VIP"), "purple_black"),
         CardProductDto("product_graphite", "Next Graphite", "MASTERCARD", "Intermediário", 9900, DEFAULT_CARD_LIMIT_CENTS, listOf("Cartão virtual", "Parcelamento"), "graphite"),
         CardProductDto("product_blue", "Next Blue", "ELO", "Essencial", 0, DEFAULT_CARD_LIMIT_CENTS, listOf("Sem anuidade", "Notificações em tempo real"), "blue_dark"),

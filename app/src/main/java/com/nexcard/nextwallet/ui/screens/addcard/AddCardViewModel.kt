@@ -24,10 +24,17 @@ class AddCardViewModel @Inject constructor(
         viewModelScope.launch {
             walletRepository.observeProducts().collect { products ->
                 _state.update {
+                    val defaultProductId = products.firstOrNull { product ->
+                        product.style == it.selectedStyle
+                    }?.id.orEmpty()
                     it.copy(
                         products = products,
                         loadState = if (products.isEmpty()) ScreenLoadState.Empty else ScreenLoadState.Success,
-                        selectedProductId = if (it.selectedProductId.isBlank()) products.firstOrNull()?.id.orEmpty() else it.selectedProductId,
+                        selectedProductId = if (it.selectedProductId.isBlank()) {
+                            defaultProductId.ifBlank { products.firstOrNull()?.id.orEmpty() }
+                        } else {
+                            it.selectedProductId
+                        },
                     )
                 }
             }
@@ -62,4 +69,5 @@ class AddCardViewModel @Inject constructor(
             if (result.isSuccess) onSuccess()
         }
     }
+
 }
