@@ -1,6 +1,7 @@
 package com.nexcard.nextwallet.ui.screens.financial
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -20,10 +21,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DirectionsCar
-import androidx.compose.material.icons.filled.FlightTakeoff
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.ModalBottomSheet
@@ -40,9 +37,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -63,6 +60,7 @@ import com.nexcard.nextwallet.ui.components.ErrorContent
 import com.nexcard.nextwallet.ui.components.LoadingContent
 import com.nexcard.nextwallet.ui.components.NextWalletScaffold
 import com.nexcard.nextwallet.ui.components.PrimaryButton
+import com.nexcard.nextwallet.ui.util.resolveCardAssetPath
 import com.nexcard.nextwallet.util.MoneyFormatter
 import com.nexcard.nextwallet.util.ScreenLoadState
 import java.math.BigDecimal
@@ -73,6 +71,7 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FinancialScreen(
+    onBack: () -> Unit,
     onOpenConsolidated: (String, String) -> Unit,
     viewModel: FinancialViewModel = hiltViewModel(),
 ) {
@@ -111,6 +110,29 @@ fun FinancialScreen(
                             .padding(horizontal = 14.dp, vertical = 18.dp)
                             .verticalScroll(rememberScrollState()),
                     ) {
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End,
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(32.dp)
+                                    .clip(CircleShape)
+                                    .clickable(onClick = onBack),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                AppIcon(
+                                    iconPath = "images/arrow-circle-left.png",
+                                    contentDescription = stringResource(R.string.back),
+                                    modifier = Modifier.fillMaxSize(),
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(6.dp))
+
                         Text(
                             text = stringResource(R.string.limits),
                             color = Color(0xFF21195B),
@@ -135,7 +157,7 @@ fun FinancialScreen(
                         Text(
                             text = stringResource(R.string.invoices),
                             color = Color(0xFF201A53),
-                            fontSize = 30.sp,
+                            fontSize = 26.sp,
                             fontWeight = FontWeight.Bold,
                         )
 
@@ -166,7 +188,7 @@ fun FinancialScreen(
                         Text(
                             text = stringResource(R.string.purchases),
                             color = Color(0xFF201A53),
-                            fontSize = 30.sp,
+                            fontSize = 26.sp,
                             fontWeight = FontWeight.Bold,
                         )
 
@@ -182,7 +204,6 @@ fun FinancialScreen(
                                 PurchaseCircle(
                                     label = item.label,
                                     valueCents = item.valueCents,
-                                    icon = item.icon,
                                     ringAssetPath = item.ringAssetPath,
                                 )
                             }
@@ -220,7 +241,7 @@ fun FinancialScreen(
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(18.dp))
+                        Spacer(modifier = Modifier.height(26.dp))
 
                         Row(
                             modifier = Modifier
@@ -228,7 +249,7 @@ fun FinancialScreen(
                                 .height(72.dp)
                                 .clip(RoundedCornerShape(24.dp))
                                 .background(Color(0xFF31105A))
-                                .padding(horizontal = 24.dp),
+                                .padding(horizontal = 20.dp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
@@ -238,7 +259,7 @@ fun FinancialScreen(
                             BottomBarIcon(iconPath = "icons/setting.png")
                         }
 
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(6.dp))
                     }
                 }
             }
@@ -298,7 +319,7 @@ private fun LimitsCard(cardImagePath: String, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(1.74f)
+            .aspectRatio(1.86f)
             .clip(RoundedCornerShape(24.dp))
             .background(Color(0xFF29242E))
             .clickable(onClick = onClick),
@@ -322,16 +343,11 @@ private fun LimitsCard(cardImagePath: String, onClick: () -> Unit) {
 }
 
 private fun cardImagePath(card: Card): String {
-    return when (card.colorStyle) {
-        "purple_black" -> "cards/Cart  Geometric  34.png"
-        "graphite" -> "cards/Cart 25.png"
-        "blue_dark" -> "cards/Cart 24.jpg"
-        else -> when (card.id) {
-            "card_01" -> "cards/Cart  Geometric  34.png"
-            "card_02" -> "cards/Cart 25.png"
-            else -> "cards/Cart 24.jpg"
-        }
-    }
+    return resolveCardAssetPath(
+        colorStyle = card.colorStyle,
+        productId = card.productId,
+        cardId = card.id,
+    )
 }
 
 @Composable
@@ -393,52 +409,84 @@ private fun InvoiceTile(
 
     Column(
         modifier = Modifier
-            .width(108.dp)
+            .width(96.dp)
             .clip(RoundedCornerShape(24.dp))
             .background(bg)
             .clickable(onClick = onClick)
-            .padding(vertical = 14.dp),
+            .padding(vertical = 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(3.dp),
     ) {
-        Text(text = month, color = fg, fontSize = 14.sp)
-        Text(text = MoneyFormatter.format(valueCents), color = fg, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+        Text(text = month, color = fg, fontSize = 13.sp)
+        Text(text = MoneyFormatter.format(valueCents), color = fg, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
         val status = if (openLabel) stringResource(R.string.invoice_open) else stringResource(R.string.invoice_closed)
-        Text(text = status, color = fg, fontSize = 12.sp)
+        Text(text = status, color = fg, fontSize = 11.sp)
     }
 }
 
 @Composable
-private fun PurchaseCircle(label: String, valueCents: Long, icon: ImageVector, ringAssetPath: String) {
+private fun PurchaseCircle(label: String, valueCents: Long, ringAssetPath: String) {
+    val isMercado = label == "MERCADO"
+    val isUber = label == "UBER"
+    val isPassagem = label == "PASSAGEM"
+    val iconPath = when {
+        isMercado -> "images/ShoppingCart.png"
+        isUber -> "images/CarFront.png"
+        else -> "images/TakeOff.png"
+    }
+    val effectiveRingAssetPath = ringAssetPath
+    val ringContentScale = ContentScale.Fit
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         Box(
             modifier = Modifier
-                .size(84.dp),
+                .shadow(elevation = 2.dp, spotColor = Color(0x4D000000), ambientColor = Color(0x4D000000), shape = CircleShape)
+                .shadow(elevation = 6.dp, spotColor = Color(0x26000000), ambientColor = Color(0x26000000), shape = CircleShape)
+                .then(
+                    if (isUber) {
+                        Modifier
+                            .padding(0.dp)
+                            .width(105.04625f.dp)
+                            .height(105.30237f.dp)
+                    } else if (isPassagem) {
+                        Modifier
+                            .padding(0.dp)
+                            .width(105.30577f.dp)
+                            .height(105.30773f.dp)
+                    } else {
+                        Modifier.size(if (isMercado || isPassagem) 105.dp else 104.dp)
+                    }
+                ),
             contentAlignment = Alignment.Center,
         ) {
             AppIcon(
-                iconPath = ringAssetPath,
-                contentDescription = null,
+                iconPath = effectiveRingAssetPath,
+                contentDescription = label,
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Fit,
+                contentScale = ringContentScale,
             )
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp),
+                modifier = Modifier.padding(top = 4.dp),
             ) {
-                androidx.compose.material3.Icon(
-                    imageVector = icon,
+                AppIcon(
+                    iconPath = iconPath,
                     contentDescription = label,
-                    tint = Color(0xFF1F1F1F),
-                    modifier = Modifier.size(28.dp),
+                    modifier = Modifier.size(38.dp),
+                    contentScale = ContentScale.Fit,
                 )
-                Text(text = label, color = Color(0xFF1F1F1F), fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                Text(
+                    text = label,
+                    color = Color(0xFF111111),
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.SemiBold,
+                )
             }
         }
-        Text(text = MoneyFormatter.format(valueCents), color = Color(0xFF1F1F1F), fontSize = 14.sp, fontWeight = FontWeight.Medium)
     }
 }
 
@@ -453,7 +501,6 @@ private data class InvoiceUiItem(
 private data class PurchaseInsightUiItem(
     val label: String,
     val valueCents: Long,
-    val icon: ImageVector,
     val ringAssetPath: String,
 )
 
@@ -541,20 +588,17 @@ private fun buildPurchaseInsights(transactions: List<Transaction>): List<Purchas
         PurchaseInsightUiItem(
             label = "MERCADO",
             valueCents = mercado,
-            icon = Icons.Default.ShoppingCart,
-            ringAssetPath = "images/Group 26943.png",
+            ringAssetPath = "images/Group 26969.png",
         ),
         PurchaseInsightUiItem(
             label = "UBER",
             valueCents = uber,
-            icon = Icons.Default.DirectionsCar,
-            ringAssetPath = "images/Group 26944.png",
+            ringAssetPath = "images/Group 26970.png",
         ),
         PurchaseInsightUiItem(
             label = "PASSAGEM",
             valueCents = passagem,
-            icon = Icons.Default.FlightTakeoff,
-            ringAssetPath = "images/Group 26945.png",
+            ringAssetPath = "images/Group 26971.png",
         ),
     )
 }
@@ -608,14 +652,15 @@ private fun monthLabelFromKey(referenceMonth: String): String {
 private fun BottomBarIcon(iconPath: String) {
     Box(
         modifier = Modifier
-            .size(44.dp)
-            .clip(RoundedCornerShape(12.dp)),
+            .size(46.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(Color.Transparent),
         contentAlignment = Alignment.Center,
     ) {
         AppIcon(
             iconPath = iconPath,
             contentDescription = null,
-            modifier = Modifier.size(28.dp),
+            modifier = Modifier.size(30.dp),
         )
     }
 }
@@ -625,7 +670,7 @@ private fun TextAction(text: String, onClick: () -> Unit) {
     Text(
         text = text,
         color = Color(0xFF5A27A2),
-        fontSize = 24.sp,
+        fontSize = 20.sp,
         fontWeight = FontWeight.Medium,
         modifier = Modifier.clickable(onClick = onClick),
     )

@@ -35,6 +35,7 @@ import com.nexcard.nextwallet.ui.components.AppIcon
 import com.nexcard.nextwallet.ui.components.ConfirmationDialog
 import com.nexcard.nextwallet.ui.components.ErrorContent
 import com.nexcard.nextwallet.ui.components.LoadingContent
+import com.nexcard.nextwallet.ui.util.resolveCardAssetPath
 import com.nexcard.nextwallet.util.MoneyFormatter
 import com.nexcard.nextwallet.util.ScreenLoadState
 
@@ -116,23 +117,28 @@ private fun CardDetailContent(
                 .background(Color.White)
                 .padding(horizontal = 24.dp, vertical = 18.dp),
         ) {
-            Spacer(modifier = Modifier.height(14.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-            Box(
-                modifier = Modifier
-                    .size(32.dp)
-                    .clip(CircleShape)
-                    .clickable(onClick = onBack),
-                contentAlignment = Alignment.Center,
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
             ) {
-                AppIcon(
-                    iconPath = "images/arrow-circle-left.png",
-                    contentDescription = stringResource(R.string.back),
-                    modifier = Modifier.fillMaxSize(),
-                )
+                Box(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .clip(CircleShape)
+                        .clickable(onClick = onBack),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    AppIcon(
+                        iconPath = "images/arrow-circle-left.png",
+                        contentDescription = stringResource(R.string.back),
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                }
             }
 
-            Spacer(modifier = Modifier.height(14.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             Text(
                 text = stringResource(R.string.card_details),
@@ -151,7 +157,7 @@ private fun CardDetailContent(
                     .clip(RoundedCornerShape(24.dp)),
             ) {
                 AppIcon(
-                    iconPath = cardAssetPath(card.id),
+                    iconPath = cardAssetPath(card),
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds,
@@ -300,12 +306,12 @@ private fun TextAction(text: String, onClick: () -> Unit) {
     )
 }
 
-private fun cardAssetPath(cardId: String): String {
-    return when (cardId) {
-        "card_01" -> "cards/Cart  Geometric  34.png"
-        "card_02" -> "cards/Cart 25.png"
-        else -> "cards/Cart 24.jpg"
-    }
+private fun cardAssetPath(card: Card): String {
+    return resolveCardAssetPath(
+        colorStyle = card.colorStyle,
+        productId = card.productId,
+        cardId = card.id,
+    )
 }
 
 private fun virtualCardCvv(card: Card): String {

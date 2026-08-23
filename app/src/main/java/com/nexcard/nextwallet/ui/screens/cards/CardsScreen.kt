@@ -2,6 +2,8 @@ package com.nexcard.nextwallet.ui.screens.cards
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,10 +32,12 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nexcard.nextwallet.R
+import com.nexcard.nextwallet.domain.model.Card
 import com.nexcard.nextwallet.ui.components.AppIcon
 import com.nexcard.nextwallet.ui.components.EmptyContent
 import com.nexcard.nextwallet.ui.components.ErrorContent
 import com.nexcard.nextwallet.ui.components.LoadingContent
+import com.nexcard.nextwallet.ui.util.resolveCardAssetPath
 import com.nexcard.nextwallet.util.ScreenLoadState
 
 @Composable
@@ -53,7 +57,6 @@ fun CardsScreen(
         is ScreenLoadState.Error -> ErrorContent(loadState.message, viewModel::refresh)
         ScreenLoadState.Empty -> EmptyContent(stringResource(R.string.no_cards), stringResource(R.string.request_card), onAddCard)
         else -> {
-            val cardIds = state.cards.map { it.id }
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -67,25 +70,30 @@ fun CardsScreen(
                         .background(Color.White)
                         .padding(horizontal = 24.dp, vertical = 18.dp),
                 ) {
-                    Spacer(modifier = Modifier.height(14.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                    Box(
-                        modifier = Modifier
-                            .size(32.dp)
-                            .clip(CircleShape)
-                            .clickable(onClick = onBack),
-                        contentAlignment = Alignment.Center,
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End,
                     ) {
-                        AppIcon(
-                            iconPath = "images/arrow-circle-left.png",
-                            contentDescription = stringResource(R.string.back),
-                            modifier = Modifier.fillMaxSize(),
-                        )
+                        Box(
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clip(CircleShape)
+                                .clickable(onClick = onBack),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            AppIcon(
+                                iconPath = "images/arrow-circle-left.png",
+                                contentDescription = stringResource(R.string.back),
+                                modifier = Modifier.fillMaxSize(),
+                            )
+                        }
                     }
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(6.dp))
 
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
                     Text(
                         text = "Seus Cartões",
@@ -96,15 +104,21 @@ fun CardsScreen(
                         fontWeight = FontWeight.Bold,
                     )
 
-                    Spacer(modifier = Modifier.height(14.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
 
-                    CardsImageItem("cards/Cart  Geometric  34.png") { onCardClick(cardIds.getOrElse(0) { "card_01" }) }
-                    Spacer(modifier = Modifier.height(14.dp))
-                    CardsImageItem("cards/Cart 25.png") { onCardClick(cardIds.getOrElse(1) { "card_02" }) }
-                    Spacer(modifier = Modifier.height(14.dp))
-                    CardsImageItem("cards/Cart 24.jpg") { onCardClick(cardIds.getOrElse(2) { "card_03" }) }
-
-                    Spacer(modifier = Modifier.weight(1f))
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .verticalScroll(rememberScrollState())
+                            .padding(bottom = 12.dp),
+                    ) {
+                        state.cards.forEachIndexed { index, card ->
+                            CardsImageItem(cardAssetPath(card)) { onCardClick(card.id) }
+                            if (index < state.cards.lastIndex) {
+                                Spacer(modifier = Modifier.height(10.dp))
+                            }
+                        }
+                    }
 
                     Row(
                         modifier = Modifier
@@ -129,6 +143,14 @@ fun CardsScreen(
     }
 }
 
+private fun cardAssetPath(card: Card): String {
+    return resolveCardAssetPath(
+        colorStyle = card.colorStyle,
+        productId = card.productId,
+        cardId = card.id,
+    )
+}
+
 @Composable
 private fun CardsImageItem(
     path: String,
@@ -137,7 +159,7 @@ private fun CardsImageItem(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(1.86f)
+            .aspectRatio(2.12f)
             .clip(RoundedCornerShape(24.dp))
             .clickable(onClick = onClick),
     ) {
