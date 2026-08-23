@@ -75,6 +75,7 @@ import java.util.Locale
 fun FinancialScreen(
     onBack: () -> Unit,
     onOpenConsolidated: (String, String) -> Unit,
+    onGoSettings: () -> Unit,
     viewModel: FinancialViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -260,7 +261,10 @@ fun FinancialScreen(
                             BottomBarIcon(iconPath = "icons/wallet-2.png")
                             BottomBarIcon(iconPath = "icons/transactions/chart-2.png")
                             BottomBarIcon(iconPath = "icons/notification-bing.png")
-                            BottomBarIcon(iconPath = "icons/setting.png")
+                            BottomBarIcon(
+                                iconPath = "icons/setting.png",
+                                onClick = onGoSettings,
+                            )
                         }
 
                         Spacer(modifier = Modifier.height(6.dp))
@@ -653,12 +657,13 @@ private fun monthLabelFromKey(referenceMonth: String): String {
 }
 
 @Composable
-private fun BottomBarIcon(iconPath: String) {
+private fun BottomBarIcon(iconPath: String, onClick: (() -> Unit)? = null) {
     Box(
         modifier = Modifier
             .size(46.dp)
             .clip(RoundedCornerShape(10.dp))
-            .background(Color.Transparent),
+            .background(Color.Transparent)
+            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier),
         contentAlignment = Alignment.Center,
     ) {
         AppIcon(

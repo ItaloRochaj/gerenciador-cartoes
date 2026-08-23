@@ -150,6 +150,7 @@ fun NextWalletNavHost(
                     onOpenConsolidated = { cardId, month ->
                         navController.navigate(AppRoute.Consolidated.create(cardId = cardId, month = month))
                     },
+                    onGoSettings = { navController.navigate(AppRoute.Settings.route) },
                 )
             }
             composable(
