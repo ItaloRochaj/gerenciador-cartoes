@@ -17,11 +17,15 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -195,6 +199,15 @@ private fun CardDetailContent(
 
             if (showVirtualCard) {
                 Spacer(modifier = Modifier.height(14.dp))
+
+                val rotationAngle by animateFloatAsState(
+                    targetValue = if (showCardBack) 180f else 0f,
+                    animationSpec = tween(durationMillis = 520),
+                    label = "virtual-card-flip",
+                )
+                val density = LocalDensity.current.density
+                val showBackFace = rotationAngle > 90f
+
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -204,23 +217,55 @@ private fun CardDetailContent(
                         .padding(12.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .graphicsLayer {
+                                rotationY = rotationAngle
+                                cameraDistance = 12f * density
+                            },
                     ) {
-                        Text(
-                            text = if (revealNumber) virtualCardNumber(card) else "**** **** **** ${virtualCardLastFour(card)}",
-                            color = darkAwareTextColor(Color(0xFF221A56)),
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold,
-                        )
-                        Text(
-                            text = if (revealCvv) "CVV: ${virtualCardCvv(card)}" else "CVV: ***",
-                            color = darkAwareTextColor(Color(0xFF221A56)),
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold,
-                        )
+                        if (!showBackFace) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Text(
+                                    text = if (revealNumber) virtualCardNumber(card) else "**** **** **** ${virtualCardLastFour(card)}",
+                                    color = darkAwareTextColor(Color(0xFF221A56)),
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                )
+                                Text(
+                                    text = "Toque para virar",
+                                    color = darkAwareTextColor(Color(0xFF5A27A2)),
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Medium,
+                                )
+                            }
+                        } else {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .graphicsLayer { rotationY = 180f },
+                                verticalArrangement = Arrangement.spacedBy(10.dp),
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(28.dp)
+                                        .clip(RoundedCornerShape(6.dp))
+                                        .background(Color(0xFF2A2A2A)),
+                                )
+                                Text(
+                                    text = if (revealCvv) "CVV: ${virtualCardCvv(card)}" else "CVV: ***",
+                                    color = darkAwareTextColor(Color(0xFF221A56)),
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                        }
                     }
 
                     Row(
