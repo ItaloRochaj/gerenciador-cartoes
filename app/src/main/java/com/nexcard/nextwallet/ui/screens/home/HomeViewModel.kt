@@ -24,17 +24,30 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            runCatching {
+                walletRepository.refreshCards()
+                walletRepository.refreshTransactions()
+            }
             try {
                 combine(
                     walletRepository.observeCards(),
                     walletRepository.observeTransactions(),
                     preferencesDataStore.userName,
-                ) { cards, transactions, name ->
+                    preferencesDataStore.lastCardId,
+                ) { cards, transactions, name, lastCardId ->
+                    val primaryCard = cards.firstOrNull { it.id == lastCardId } ?: cards.firstOrNull()
+                    val recentTransactions = transactions
+                        .asSequence()
+                        .filter { tx -> primaryCard == null || tx.cardId == primaryCard.id }
+                        .sortedByDescending { it.dateEpochMillis }
+                        .take(6)
+                        .toList()
+
                     HomeUiState(
                         loadState = ScreenLoadState.Success,
                         userName = name.ifBlank { "Usuário" },
-                        primaryCard = cards.firstOrNull(),
-                        recentTransactions = transactions.take(5),
+                        primaryCard = primaryCard,
+                        recentTransactions = recentTransactions,
                     )
                 }.collect { _state.value = it }
             } catch (e: Exception) {

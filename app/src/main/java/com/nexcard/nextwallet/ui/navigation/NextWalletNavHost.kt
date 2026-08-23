@@ -26,6 +26,7 @@ import com.nexcard.nextwallet.ui.components.NextWalletScaffold
 import com.nexcard.nextwallet.ui.screens.addcard.AddCardScreen
 import com.nexcard.nextwallet.ui.screens.carddetail.CardDetailScreen
 import com.nexcard.nextwallet.ui.screens.cards.CardsScreen
+import com.nexcard.nextwallet.ui.screens.financial.ConsolidatedScreen
 import com.nexcard.nextwallet.ui.screens.financial.FinancialScreen
 import com.nexcard.nextwallet.ui.screens.home.HomeScreen
 import com.nexcard.nextwallet.ui.screens.login.LoginScreen
@@ -53,7 +54,7 @@ fun NextWalletNavHost(
         BottomNavItem(AppRoute.Settings.route, stringResource(R.string.settings), Icons.Default.Settings),
     )
 
-    val showBottomBar = current in setOf(AppRoute.Home.route, AppRoute.Cards.route, AppRoute.Financial.route, AppRoute.Settings.route)
+    val showBottomBar = current in setOf(AppRoute.Settings.route)
 
     NextWalletScaffold(
         snackbarHostState = snack,
@@ -94,20 +95,68 @@ fun NextWalletNavHost(
             composable(AppRoute.Home.route) {
                 HomeScreen(
                     onGoCards = { navController.navigate(AppRoute.Cards.route) },
-                    onGoFinancial = { navController.navigate(AppRoute.Financial.route) },
+                    onGoFinancial = { cardId, month ->
+                        navController.navigate(AppRoute.Financial.create(cardId = cardId, month = month))
+                    },
+                    onGoConsolidated = { cardId, month ->
+                        navController.navigate(AppRoute.Consolidated.create(cardId = cardId, month = month))
+                    },
+                    onGoSettings = { navController.navigate(AppRoute.Settings.route) },
                     onGoAddCard = { navController.navigate(AppRoute.AddCard.route) },
                     onGoDetail = { navController.navigate(AppRoute.CardDetail.create(it)) },
                 )
             }
             composable(AppRoute.Cards.route) {
                 CardsScreen(
-                    onBack = { navController.popBackStack() },
+                    onBack = {
+                        val didPopToHome = navController.popBackStack(AppRoute.Home.route, inclusive = false)
+                        if (!didPopToHome) {
+                            navController.navigate(AppRoute.Home.route) {
+                                popUpTo(0) { inclusive = false }
+                                launchSingleTop = true
+                            }
+                        }
+                    },
                     onCardClick = { navController.navigate(AppRoute.CardDetail.create(it)) },
                     onAddCard = { navController.navigate(AppRoute.AddCard.route) },
+                    onGoCards = { navController.navigate(AppRoute.Cards.route) },
+                    onGoFinancial = { navController.navigate(AppRoute.Financial.route) },
+                    onGoSettings = { navController.navigate(AppRoute.Settings.route) },
                 )
             }
-            composable(AppRoute.Financial.route) {
-                FinancialScreen()
+            composable(
+                route = AppRoute.Financial.routeWithArgs,
+                arguments = listOf(
+                    navArgument(AppRoute.Financial.ARG_CARD_ID) {
+                        type = NavType.StringType
+                        defaultValue = ""
+                    },
+                    navArgument(AppRoute.Financial.ARG_MONTH) {
+                        type = NavType.StringType
+                        defaultValue = ""
+                    },
+                ),
+            ) {
+                FinancialScreen(
+                    onOpenConsolidated = { cardId, month ->
+                        navController.navigate(AppRoute.Consolidated.create(cardId = cardId, month = month))
+                    },
+                )
+            }
+            composable(
+                route = AppRoute.Consolidated.routeWithArgs,
+                arguments = listOf(
+                    navArgument(AppRoute.Consolidated.ARG_CARD_ID) {
+                        type = NavType.StringType
+                        defaultValue = ""
+                    },
+                    navArgument(AppRoute.Consolidated.ARG_MONTH) {
+                        type = NavType.StringType
+                        defaultValue = ""
+                    },
+                ),
+            ) {
+                ConsolidatedScreen(onBack = { navController.popBackStack() })
             }
             composable(AppRoute.AddCard.route) {
                 AddCardScreen(

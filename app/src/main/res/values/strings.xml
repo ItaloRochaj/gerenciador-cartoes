@@ -35,6 +35,7 @@
     <string name="sort">Ordenar</string>
     <string name="description">Descrição</string>
     <string name="value_cents_hint">Valor em centavos</string>
+    <string name="value_reais_hint">Valor em reais (ex: 89,56)</string>
     <string name="save">Salvar</string>
     <string name="new_limit">Novo limite</string>
     <string name="card_details">Detalhes do seu cartão</string>
@@ -85,4 +86,10 @@
     <string name="sign_up_with">Sign up with</string>
     <string name="no_account_yet">Ainda não tem uma conta?</string>
     <string name="create_short">Criar</string>
+    <string name="active_status">Ativo</string>
+    <string name="available_limit_label">Limite disponível</string>
+    <string name="mastercard_label">Cartão\nMastercard</string>
+    <string name="latest_transactions_clean">Ultimas transações</string>
+    <string name="invoice_open">Aberta</string>
+    <string name="invoice_closed">Fechada</string>
 </resources>
