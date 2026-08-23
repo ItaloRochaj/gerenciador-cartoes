@@ -46,7 +46,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nexcard.nextwallet.R
 import com.nexcard.nextwallet.ui.components.AppIcon
-import com.nexcard.nextwallet.ui.components.AuthIcons
 import com.nexcard.nextwallet.ui.theme.darkAwareTextColor
 
 @Composable
@@ -170,7 +169,7 @@ fun LoginScreen(
                     placeholder = stringResource(R.string.username),
                     leadingIcon = {
                         AppIcon(
-                            iconPath = AuthIcons.PROFILE,
+                            iconPath = "images/profilee.png",
                             contentDescription = stringResource(R.string.username),
                             modifier = Modifier.size(16.dp),
                         )
@@ -189,7 +188,7 @@ fun LoginScreen(
                     visualTransformation = if (state.showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                     leadingIcon = {
                         AppIcon(
-                            iconPath = "icons/key-square.svg",
+                            iconPath = "images/key-squaree.png",
                             contentDescription = stringResource(R.string.password_placeholder),
                             modifier = Modifier.size(16.dp),
                         )
