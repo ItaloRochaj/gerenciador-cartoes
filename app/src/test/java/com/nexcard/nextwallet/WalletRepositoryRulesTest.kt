@@ -4,6 +4,7 @@ import com.nexcard.nextwallet.domain.model.Card
 import com.nexcard.nextwallet.domain.model.CardBrand
 import com.nexcard.nextwallet.domain.model.CardStatus
 import com.nexcard.nextwallet.domain.model.CardType
+import com.nexcard.nextwallet.domain.model.Invoice
 import com.nexcard.nextwallet.domain.model.Transaction
 import com.nexcard.nextwallet.domain.model.TransactionCategory
 import com.nexcard.nextwallet.domain.model.TransactionStatus
@@ -63,6 +64,7 @@ private class FakeWalletRepository(private val apiFail: Boolean = false) : Walle
     )
     override fun observeCards(): Flow<List<Card>> = MutableStateFlow(listOf(card))
     override fun observeTransactions(): Flow<List<Transaction>> = flowOf(emptyList())
+    override fun observeInvoices(): Flow<List<Invoice>> = flowOf(emptyList())
     override fun observeProducts() = flowOf(emptyList<com.nexcard.nextwallet.domain.model.CardProduct>())
     override suspend fun refreshCards(): Result<Unit> = if (apiFail) Result.failure(Exception("erro")) else Result.success(Unit)
     override suspend fun refreshTransactions() = Result.success(Unit)

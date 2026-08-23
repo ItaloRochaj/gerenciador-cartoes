@@ -13,6 +13,7 @@ class SettingsRepositoryImpl @Inject constructor(
 ) : SettingsRepository {
     override val themeMode: Flow<ThemeMode> = preferencesDataStore.themeMode
     override val notificationsEnabled: Flow<Boolean> = preferencesDataStore.notificationsEnabled
+    override val lastCardId: Flow<String> = preferencesDataStore.lastCardId
 
     override suspend fun setThemeMode(themeMode: ThemeMode) {
         preferencesDataStore.setThemeMode(themeMode)

@@ -17,6 +17,7 @@ import com.nexcard.nextwallet.data.remote.dto.PostTransactionRequestDto
 import com.nexcard.nextwallet.domain.model.Card
 import com.nexcard.nextwallet.domain.model.CardStatus
 import com.nexcard.nextwallet.domain.model.CardProduct
+import com.nexcard.nextwallet.domain.model.Invoice
 import com.nexcard.nextwallet.domain.model.Transaction
 import com.nexcard.nextwallet.domain.model.TransactionCategory
 import com.nexcard.nextwallet.domain.repository.WalletRepository
@@ -39,6 +40,7 @@ class WalletRepositoryImpl @Inject constructor(
 
     override fun observeCards(): Flow<List<Card>> = cardDao.observeAll().map { list -> list.map { it.toDomain() } }
     override fun observeTransactions(): Flow<List<Transaction>> = transactionDao.observeAll().map { list -> list.map { it.toDomain() } }
+    override fun observeInvoices(): Flow<List<Invoice>> = invoiceDao.observeAll().map { list -> list.map { it.toDomain() } }
     override fun observeProducts(): Flow<List<CardProduct>> = productDao.observeAll().map { list -> list.map { it.toDomain() } }
 
     override suspend fun refreshCards(): Result<Unit> = runCatching {

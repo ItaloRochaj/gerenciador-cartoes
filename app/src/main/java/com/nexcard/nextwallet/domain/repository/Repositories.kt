@@ -2,6 +2,7 @@ package com.nexcard.nextwallet.domain.repository
 
 import com.nexcard.nextwallet.domain.model.Card
 import com.nexcard.nextwallet.domain.model.CardProduct
+import com.nexcard.nextwallet.domain.model.Invoice
 import com.nexcard.nextwallet.domain.model.ThemeMode
 import com.nexcard.nextwallet.domain.model.Transaction
 import com.nexcard.nextwallet.domain.model.TransactionCategory
@@ -19,6 +20,7 @@ interface AuthRepository {
 interface WalletRepository {
     fun observeCards(): Flow<List<Card>>
     fun observeTransactions(): Flow<List<Transaction>>
+    fun observeInvoices(): Flow<List<Invoice>>
     fun observeProducts(): Flow<List<CardProduct>>
     suspend fun refreshCards(): Result<Unit>
     suspend fun refreshTransactions(): Result<Unit>
@@ -40,6 +42,7 @@ interface WalletRepository {
 interface SettingsRepository {
     val themeMode: Flow<ThemeMode>
     val notificationsEnabled: Flow<Boolean>
+    val lastCardId: Flow<String>
     suspend fun setThemeMode(themeMode: ThemeMode)
     suspend fun setNotificationsEnabled(enabled: Boolean)
     suspend fun setLastCard(cardId: String)

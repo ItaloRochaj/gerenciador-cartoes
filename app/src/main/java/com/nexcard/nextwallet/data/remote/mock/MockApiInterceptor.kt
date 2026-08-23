@@ -134,24 +134,29 @@ class MockApiInterceptor @Inject constructor(
 }
 
 object MockApiState {
+    private const val DEFAULT_CARD_LIMIT_CENTS = 2_000_000L
+
     val cards = mutableListOf(
-        CardDto("card_01", "product_black", "Usuário Next Wallet", "**** **** **** 9981", "9981", "VISA", "CREDIT", "12/30", 700000, 243900, 456100, "ACTIVE", true, "purple_black", true),
-        CardDto("card_02", "product_graphite", "Usuário Next Wallet", "**** **** **** 1234", "1234", "MASTERCARD", "CREDIT", "11/29", 320000, 89500, 230500, "ACTIVE", false, "graphite", true),
-        CardDto("card_03", "product_blue", "Usuário Next Wallet", "**** **** **** 4509", "4509", "ELO", "DEBIT_CREDIT", "07/28", 180000, 6200, 173800, "BLOCKED", false, "blue_dark", true),
+        CardDto("card_01", "product_black", "Usuário Next Wallet", "**** **** **** 9981", "9981", "VISA", "CREDIT", "12/30", DEFAULT_CARD_LIMIT_CENTS, 243900, DEFAULT_CARD_LIMIT_CENTS - 243900, "ACTIVE", true, "purple_black", true),
+        CardDto("card_02", "product_graphite", "Usuário Next Wallet", "**** **** **** 1234", "1234", "MASTERCARD", "CREDIT", "11/29", DEFAULT_CARD_LIMIT_CENTS, 89500, DEFAULT_CARD_LIMIT_CENTS - 89500, "ACTIVE", false, "graphite", true),
+        CardDto("card_03", "product_blue", "Usuário Next Wallet", "**** **** **** 4509", "4509", "ELO", "DEBIT_CREDIT", "07/28", DEFAULT_CARD_LIMIT_CENTS, 6200, DEFAULT_CARD_LIMIT_CENTS - 6200, "BLOCKED", false, "blue_dark", true),
     )
 
     val products = mutableListOf(
-        CardProductDto("product_black", "Next Black", "VISA", "Premium", 0, 700000, listOf("Cashback 1.5%", "Sala VIP"), "purple_black"),
-        CardProductDto("product_graphite", "Next Graphite", "MASTERCARD", "Intermediário", 9900, 320000, listOf("Cartão virtual", "Parcelamento"), "graphite"),
-        CardProductDto("product_blue", "Next Blue", "ELO", "Essencial", 0, 180000, listOf("Sem anuidade", "Notificações em tempo real"), "blue_dark"),
+        CardProductDto("product_black", "Next Black", "VISA", "Premium", 0, DEFAULT_CARD_LIMIT_CENTS, listOf("Cashback 1.5%", "Sala VIP"), "purple_black"),
+        CardProductDto("product_graphite", "Next Graphite", "MASTERCARD", "Intermediário", 9900, DEFAULT_CARD_LIMIT_CENTS, listOf("Cartão virtual", "Parcelamento"), "graphite"),
+        CardProductDto("product_blue", "Next Blue", "ELO", "Essencial", 0, DEFAULT_CARD_LIMIT_CENTS, listOf("Sem anuidade", "Notificações em tempo real"), "blue_dark"),
     )
 
     val transactions = mutableListOf(
+        TransactionDto("tx_08", "card_01", "Aurora Store", 21990, "OUTROS", 1724187600000, "APPROVED"),
         TransactionDto("tx_01", "card_01", "Netflix", 6200, "ASSINATURAS", 1724101200000, "APPROVED"),
         TransactionDto("tx_02", "card_01", "PayPal", 8000, "OUTROS", 1724014800000, "APPROVED"),
         TransactionDto("tx_03", "card_01", "Amazon", 48000, "OUTROS", 1723928400000, "APPROVED"),
-        TransactionDto("tx_04", "card_02", "Mercado", 24390, "MERCADO", 1723842000000, "APPROVED"),
-        TransactionDto("tx_05", "card_02", "Transporte", 8950, "TRANSPORTE", 1723755600000, "APPROVED"),
+        TransactionDto("tx_04", "card_01", "Madero", 15900, "OUTROS", 1723842000000, "APPROVED"),
+        TransactionDto("tx_05", "card_01", "Zara", 32990, "OUTROS", 1723755600000, "APPROVED"),
+        TransactionDto("tx_06", "card_02", "Mercado", 24390, "MERCADO", 1723669200000, "APPROVED"),
+        TransactionDto("tx_07", "card_02", "Transporte", 8950, "TRANSPORTE", 1723582800000, "APPROVED"),
     )
 
     val invoices = mutableListOf(
