@@ -57,7 +57,7 @@ class CardDetailViewModel @Inject constructor(
     fun clearMessage() = _state.update { it.copy(message = null) }
 
     fun toggleCvv() {
-        _state.update { it.copy(revealCvv = true) }
+        _state.update { it.copy(showCardBack = true, revealCvv = true) }
         viewModelScope.launch {
             delay(4000)
             _state.update { it.copy(revealCvv = false) }
