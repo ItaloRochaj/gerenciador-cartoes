@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,6 +43,7 @@ import com.nexcard.nextwallet.ui.components.AppIcon
 import com.nexcard.nextwallet.ui.components.ErrorContent
 import com.nexcard.nextwallet.ui.components.LoadingContent
 import com.nexcard.nextwallet.ui.components.NextWalletScaffold
+import com.nexcard.nextwallet.ui.theme.darkAwareTextColor
 import com.nexcard.nextwallet.util.ScreenLoadState
 import kotlinx.coroutines.delay
 
@@ -54,6 +56,8 @@ fun AddCardScreen(
     viewModel: AddCardViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val appBackground = MaterialTheme.colorScheme.background
+    val containerSurface = MaterialTheme.colorScheme.surface
     val snack = remember { SnackbarHostState() }
     var requestedThisVisit by remember { mutableStateOf(false) }
     var bannerMessage by remember { mutableStateOf<String?>(null) }
@@ -81,7 +85,7 @@ fun AddCardScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFFF3F3F6))
+                .background(appBackground)
                 .padding(10.dp),
         ) {
             when (val load = state.loadState) {
@@ -93,7 +97,7 @@ fun AddCardScreen(
                             .fillMaxSize()
                             .navigationBarsPadding()
                             .clip(RoundedCornerShape(50.dp))
-                            .background(Color.White)
+                            .background(containerSurface)
                             .padding(horizontal = 24.dp, vertical = 18.dp),
                     ) {
                         Spacer(modifier = Modifier.height(8.dp))
@@ -128,7 +132,7 @@ fun AddCardScreen(
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Text(
                                     text = stringResource(R.string.new_card),
-                                    color = Color(0xFF21195B),
+                                    color = darkAwareTextColor(Color(0xFF21195B)),
                                     fontSize = 38.sp,
                                     lineHeight = 38.sp,
                                     fontWeight = FontWeight.Bold,

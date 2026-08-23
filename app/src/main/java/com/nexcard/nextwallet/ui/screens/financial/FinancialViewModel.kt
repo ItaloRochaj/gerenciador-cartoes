@@ -3,6 +3,10 @@ package com.nexcard.nextwallet.ui.screens.financial
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nexcard.nextwallet.domain.model.Card
+import com.nexcard.nextwallet.domain.model.Invoice
+import com.nexcard.nextwallet.domain.model.Transaction
+import com.nexcard.nextwallet.domain.model.TransactionStatus
 import com.nexcard.nextwallet.domain.model.TransactionCategory
 import com.nexcard.nextwallet.domain.repository.SettingsRepository
 import com.nexcard.nextwallet.domain.repository.WalletRepository
@@ -67,11 +71,24 @@ class FinancialViewModel @Inject constructor(
                 val resolvedCardId = resolveSelectedCardId(base.cards.map { it.id }, selectedCardId, base.lastCardId)
                 val resolvedMonth = selectedMonth.ifBlank { currentYearMonthKey() }
                 val filteredInvoices = base.invoices.filter { it.cardId == resolvedCardId }
+                val selectedCard = base.cards.firstOrNull { it.id == resolvedCardId }
 
-                val monthlyTransactions = base.transactions
+                val baseMonthlyTransactions = base.transactions
                     .asSequence()
                     .filter { it.cardId == resolvedCardId }
                     .filter { referenceMonthFromEpoch(it.dateEpochMillis) == resolvedMonth }
+
+                val monthlyTransactionsSource = if (baseMonthlyTransactions.none()) {
+                    buildMockConsolidatedTransactions(
+                        card = selectedCard,
+                        invoices = filteredInvoices,
+                        referenceMonth = resolvedMonth,
+                    ).asSequence()
+                } else {
+                    baseMonthlyTransactions
+                }
+
+                val monthlyTransactions = monthlyTransactionsSource
                     .filter { tx -> selectedCategory == null || tx.category == selectedCategory }
                     .let { source ->
                         if (sortByValue) source.sortedByDescending { it.amountCents }
@@ -203,6 +220,69 @@ class FinancialViewModel @Inject constructor(
     }
 
     private fun currentYearMonthKey(): String = referenceMonthFromEpoch(System.currentTimeMillis())
+
+    private fun buildMockConsolidatedTransactions(
+        card: Card?,
+        invoices: List<Invoice>,
+        referenceMonth: String,
+    ): List<Transaction> {
+        if (card == null) return emptyList()
+
+        val totalAmount = invoices
+            .firstOrNull { it.referenceMonth == referenceMonth }
+            ?.totalAmountCents
+            ?: mockInvoiceValueCents(card, referenceMonth)
+
+        if (totalAmount <= 0L) return emptyList()
+
+        val definitions = listOf(
+            Triple("Mercado Aurora", TransactionCategory.MERCADO, 45),
+            Triple("Uber", TransactionCategory.TRANSPORTE, 20),
+            Triple("Passagem Aerea", TransactionCategory.VIAGEM, 25),
+            Triple("Streaming", TransactionCategory.ASSINATURAS, 10),
+        )
+
+        val allocations = MutableList(definitions.size) { index ->
+            if (index == definitions.lastIndex) 0L else (totalAmount * definitions[index].third) / 100
+        }
+        allocations[definitions.lastIndex] = totalAmount - allocations.dropLast(1).sum()
+
+        val year = referenceMonth.substringBefore('-').toIntOrNull() ?: return emptyList()
+        val month = referenceMonth.substringAfter('-', "1").toIntOrNull()?.coerceIn(1, 12) ?: return emptyList()
+        val days = listOf(5, 11, 18, 25)
+
+        return definitions.mapIndexed { index, (description, category, _) ->
+            Transaction(
+                id = "mock-$referenceMonth-${card.id}-$index",
+                cardId = card.id,
+                description = description,
+                amountCents = allocations[index],
+                category = category,
+                dateEpochMillis = monthDayEpochMillis(year, month, days[index]),
+                status = TransactionStatus.APPROVED,
+            )
+        }
+    }
+
+    private fun monthDayEpochMillis(year: Int, month: Int, day: Int): Long {
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.YEAR, year)
+            set(Calendar.MONTH, month - 1)
+            set(Calendar.DAY_OF_MONTH, day)
+            set(Calendar.HOUR_OF_DAY, 12)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        return calendar.timeInMillis
+    }
+
+    private fun mockInvoiceValueCents(card: Card, referenceMonth: String): Long {
+        val month = referenceMonth.substringAfter('-', "1").toIntOrNull() ?: 1
+        val base = card.totalLimitCents / 10
+        val variation = (month * 31_37L) % 95_000L
+        return (base + variation).coerceAtMost(card.totalLimitCents)
+    }
 
     private data class FinancialProjection(
         val cards: List<com.nexcard.nextwallet.domain.model.Card>,

@@ -62,13 +62,13 @@ class AuthRepositoryImpl @Inject constructor(
 
     override fun currentUser(): Flow<User?> {
         return combine(userDao.observeCurrent(), preferencesDataStore.userEmail) { entity, email ->
-            entity?.toDomain() ?: User("demo_user", "Usuário Next Wallet", email.ifBlank { DEMO_EMAIL })
+            entity?.toDomain() ?: User("demo_user", "Italo Rocha", email.ifBlank { DEMO_EMAIL })
         }
     }
 
     private fun defaultUser() = UserEntity(
         id = "demo_user",
-        name = "Usuário Next Wallet",
+        name = "Italo Rocha",
         email = DEMO_EMAIL,
         avatarUrl = "",
         password = DEMO_PASSWORD,

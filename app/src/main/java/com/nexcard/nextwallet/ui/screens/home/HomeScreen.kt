@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -40,6 +41,7 @@ import com.nexcard.nextwallet.ui.components.EmptyContent
 import com.nexcard.nextwallet.ui.components.ErrorContent
 import com.nexcard.nextwallet.ui.components.LoadingContent
 import com.nexcard.nextwallet.ui.components.ProfileAvatar
+import com.nexcard.nextwallet.ui.theme.darkAwareTextColor
 import com.nexcard.nextwallet.util.ScreenLoadState
 import java.util.Calendar
 import java.util.Locale
@@ -82,6 +84,8 @@ private fun HomeContent(
     onGoDetail: (String) -> Unit,
 ) {
     val primaryCard = state.primaryCard
+    val appBackground = MaterialTheme.colorScheme.background
+    val containerSurface = MaterialTheme.colorScheme.surface
     val goFinancialWithCurrentCard = {
         onGoFinancial(primaryCard?.id.orEmpty(), currentYearMonthKey())
     }
@@ -92,7 +96,7 @@ private fun HomeContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF3F3F6))
+            .background(appBackground)
             .padding(10.dp),
     ) {
         Column(
@@ -100,7 +104,7 @@ private fun HomeContent(
                 .fillMaxSize()
                 .shadow(80.dp, RoundedCornerShape(50.dp), spotColor = Color(0x1A000000), ambientColor = Color(0x1A000000))
                 .clip(RoundedCornerShape(50.dp))
-                .background(Color.White)
+                .background(containerSurface)
                 .padding(horizontal = 22.dp, vertical = 20.dp),
         ) {
             Spacer(modifier = Modifier.height(12.dp))
@@ -112,7 +116,7 @@ private fun HomeContent(
                 Column {
                     Text(
                         text = stringResource(R.string.app_name),
-                        color = Color(0xFF231A57),
+                        color = darkAwareTextColor(Color(0xFF231A57)),
                         fontSize = 42.sp,
                         lineHeight = 42.sp,
                         fontWeight = FontWeight.Bold,
@@ -199,7 +203,7 @@ private fun HomeContent(
             ) {
                 Text(
                     text = stringResource(R.string.latest_transactions_clean),
-                    color = Color(0xFF221A56),
+                    color = darkAwareTextColor(Color(0xFF221A56)),
                     fontSize = 32.sp,
                     lineHeight = 32.sp,
                     fontWeight = FontWeight.Bold,
@@ -338,7 +342,7 @@ private fun TransactionRow(
             Column {
                 Text(
                     text = transaction.description,
-                    color = Color(0xFF231A57),
+                    color = darkAwareTextColor(Color(0xFF231A57)),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium,
                 )
@@ -352,7 +356,7 @@ private fun TransactionRow(
 
         Text(
             text = formatAmountCompact(transaction.amountCents),
-            color = Color(0xFF221A56),
+            color = darkAwareTextColor(Color(0xFF221A56)),
             fontSize = 15.sp,
             fontWeight = FontWeight.Medium,
         )

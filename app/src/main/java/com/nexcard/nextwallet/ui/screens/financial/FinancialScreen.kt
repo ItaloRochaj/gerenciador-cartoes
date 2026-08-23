@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarHostState
@@ -60,6 +61,7 @@ import com.nexcard.nextwallet.ui.components.ErrorContent
 import com.nexcard.nextwallet.ui.components.LoadingContent
 import com.nexcard.nextwallet.ui.components.NextWalletScaffold
 import com.nexcard.nextwallet.ui.components.PrimaryButton
+import com.nexcard.nextwallet.ui.theme.darkAwareTextColor
 import com.nexcard.nextwallet.ui.util.resolveCardAssetPath
 import com.nexcard.nextwallet.util.MoneyFormatter
 import com.nexcard.nextwallet.util.ScreenLoadState
@@ -76,6 +78,8 @@ fun FinancialScreen(
     viewModel: FinancialViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val appBackground = MaterialTheme.colorScheme.background
+    val containerSurface = MaterialTheme.colorScheme.surface
     val snack = remember { SnackbarHostState() }
 
     LaunchedEffect(state.message) {
@@ -98,7 +102,7 @@ fun FinancialScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color(0xFFF3F3F6))
+                        .background(appBackground)
                         .padding(10.dp),
                 ) {
                     Column(
@@ -106,7 +110,7 @@ fun FinancialScreen(
                             .fillMaxSize()
                             .navigationBarsPadding()
                             .clip(RoundedCornerShape(50.dp))
-                            .background(Color.White)
+                            .background(containerSurface)
                             .padding(horizontal = 14.dp, vertical = 18.dp)
                             .verticalScroll(rememberScrollState()),
                     ) {
@@ -135,7 +139,7 @@ fun FinancialScreen(
 
                         Text(
                             text = stringResource(R.string.limits),
-                            color = Color(0xFF21195B),
+                            color = darkAwareTextColor(Color(0xFF21195B)),
                             fontSize = 38.sp,
                             lineHeight = 38.sp,
                             fontWeight = FontWeight.Bold,
@@ -156,7 +160,7 @@ fun FinancialScreen(
 
                         Text(
                             text = stringResource(R.string.invoices),
-                            color = Color(0xFF201A53),
+                            color = darkAwareTextColor(Color(0xFF201A53)),
                             fontSize = 26.sp,
                             fontWeight = FontWeight.Bold,
                         )
@@ -187,7 +191,7 @@ fun FinancialScreen(
 
                         Text(
                             text = stringResource(R.string.purchases),
-                            color = Color(0xFF201A53),
+                            color = darkAwareTextColor(Color(0xFF201A53)),
                             fontSize = 26.sp,
                             fontWeight = FontWeight.Bold,
                         )
@@ -357,7 +361,7 @@ private fun LimitProgressSection(card: Card) {
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Text(
             text = "Limite ${MoneyFormatter.format(card.totalLimitCents)}",
-            color = Color(0xFF21195B),
+            color = darkAwareTextColor(Color(0xFF21195B)),
             fontSize = 12.sp,
             fontWeight = FontWeight.Medium,
         )
@@ -384,12 +388,12 @@ private fun LimitProgressSection(card: Card) {
         ) {
             Text(
                 text = "Usado ${MoneyFormatter.format(card.usedLimitCents)}",
-                color = Color(0xFF201A53),
+                color = darkAwareTextColor(Color(0xFF201A53)),
                 fontSize = 12.sp,
             )
             Text(
                 text = "Disponível ${MoneyFormatter.format(card.availableLimitCents)}",
-                color = Color(0xFF201A53),
+                color = darkAwareTextColor(Color(0xFF201A53)),
                 fontSize = 12.sp,
             )
         }
@@ -669,7 +673,7 @@ private fun BottomBarIcon(iconPath: String) {
 private fun TextAction(text: String, onClick: () -> Unit) {
     Text(
         text = text,
-        color = Color(0xFF5A27A2),
+        color = darkAwareTextColor(Color(0xFF5A27A2)),
         fontSize = 20.sp,
         fontWeight = FontWeight.Medium,
         modifier = Modifier.clickable(onClick = onClick),

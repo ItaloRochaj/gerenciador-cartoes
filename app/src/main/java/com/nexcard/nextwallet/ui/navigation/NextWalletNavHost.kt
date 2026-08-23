@@ -54,7 +54,7 @@ fun NextWalletNavHost(
         BottomNavItem(AppRoute.Settings.route, stringResource(R.string.settings), Icons.Default.Settings),
     )
 
-    val showBottomBar = current in setOf(AppRoute.Settings.route)
+    val showBottomBar = false
 
     NextWalletScaffold(
         snackbarHostState = snack,
@@ -165,7 +165,14 @@ fun NextWalletNavHost(
                     },
                 ),
             ) {
-                ConsolidatedScreen(onBack = { navController.popBackStack() })
+                ConsolidatedScreen(
+                    onBack = { navController.popBackStack() },
+                    onGoCards = { navController.navigate(AppRoute.Cards.route) },
+                    onGoFinancial = { cardId, month ->
+                        navController.navigate(AppRoute.Financial.create(cardId = cardId, month = month))
+                    },
+                    onGoSettings = { navController.navigate(AppRoute.Settings.route) },
+                )
             }
             composable(AppRoute.AddCard.route) {
                 AddCardScreen(
@@ -196,8 +203,9 @@ fun NextWalletNavHost(
                             popUpTo(0) { inclusive = true }
                         }
                     },
-                    onThemeSelected = onThemeChanged,
-                    onNotificationsSelected = onNotificationsChanged,
+                    onGoCards = { navController.navigate(AppRoute.Cards.route) },
+                    onGoFinancial = { navController.navigate(AppRoute.Financial.route) },
+                    onGoSettings = { navController.navigate(AppRoute.Settings.route) },
                 )
             }
         }

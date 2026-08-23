@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,6 +36,7 @@ import com.nexcard.nextwallet.ui.components.AppIcon
 import com.nexcard.nextwallet.ui.components.ConfirmationDialog
 import com.nexcard.nextwallet.ui.components.ErrorContent
 import com.nexcard.nextwallet.ui.components.LoadingContent
+import com.nexcard.nextwallet.ui.theme.darkAwareTextColor
 import com.nexcard.nextwallet.ui.util.resolveCardAssetPath
 import com.nexcard.nextwallet.util.MoneyFormatter
 import com.nexcard.nextwallet.util.ScreenLoadState
@@ -104,17 +106,19 @@ private fun CardDetailContent(
     onToggleNumber: () -> Unit,
     onToggleCvv: () -> Unit,
 ) {
+    val appBackground = MaterialTheme.colorScheme.background
+    val containerSurface = MaterialTheme.colorScheme.surface
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF3F3F6))
+            .background(appBackground)
             .padding(10.dp),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .clip(RoundedCornerShape(50.dp))
-                .background(Color.White)
+                .background(containerSurface)
                 .padding(horizontal = 24.dp, vertical = 18.dp),
         ) {
             Spacer(modifier = Modifier.height(8.dp))
@@ -142,7 +146,7 @@ private fun CardDetailContent(
 
             Text(
                 text = stringResource(R.string.card_details),
-                color = Color(0xFF21195B),
+                color = darkAwareTextColor(Color(0xFF21195B)),
                 fontSize = 34.sp,
                 lineHeight = 36.sp,
                 fontWeight = FontWeight.Bold,
@@ -207,13 +211,13 @@ private fun CardDetailContent(
                     ) {
                         Text(
                             text = if (revealNumber) virtualCardNumber(card) else "**** **** **** ${virtualCardLastFour(card)}",
-                            color = Color(0xFF221A56),
+                            color = darkAwareTextColor(Color(0xFF221A56)),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.SemiBold,
                         )
                         Text(
                             text = if (revealCvv) "CVV: ${virtualCardCvv(card)}" else "CVV: ***",
-                            color = Color(0xFF221A56),
+                            color = darkAwareTextColor(Color(0xFF221A56)),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.SemiBold,
                         )
@@ -262,7 +266,7 @@ private fun CardDetailContent(
                 }
                 Text(
                     text = stringResource(R.string.delete),
-                    color = Color(0xFF5B259F),
+                    color = darkAwareTextColor(Color(0xFF5B259F)),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.SemiBold,
                 )
@@ -299,7 +303,7 @@ private fun DetailRow(label: String, value: String) {
 private fun TextAction(text: String, onClick: () -> Unit) {
     Text(
         text = text,
-        color = Color(0xFF5A27A2),
+        color = darkAwareTextColor(Color(0xFF5A27A2)),
         fontSize = 17.sp,
         fontWeight = FontWeight.Medium,
         modifier = Modifier.clickable(onClick = onClick),

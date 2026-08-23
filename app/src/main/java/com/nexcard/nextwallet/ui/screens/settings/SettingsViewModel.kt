@@ -32,7 +32,7 @@ class SettingsViewModel @Inject constructor(
                 settingsRepository.notificationsEnabled,
             ) { name, email, theme, notifications ->
                 SettingsUiState(
-                    userName = name.ifBlank { "Usuário Next Wallet" },
+                    userName = name.ifBlank { "Italo Rocha" },
                     email = email.ifBlank { "usuario@nextwallet.com" },
                     themeMode = theme,
                     notifications = notifications,

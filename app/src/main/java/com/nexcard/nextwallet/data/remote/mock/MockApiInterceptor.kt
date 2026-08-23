@@ -55,7 +55,7 @@ class MockApiInterceptor @Inject constructor(
                 val created = CardDto(
                     id = "card_${UUID.randomUUID().toString().take(8)}",
                     productId = product.id,
-                    holderName = "Usuário Next Wallet",
+                    holderName = "Italo Rocha",
                     maskedNumber = "**** **** **** ${randomLastFour()}",
                     lastFourDigits = randomLastFour(),
                     brand = product.brand,
@@ -137,9 +137,9 @@ object MockApiState {
     private const val DEFAULT_CARD_LIMIT_CENTS = 2_000_000L
 
     val cards = mutableListOf(
-        CardDto("card_01", "product_black", "Usuário Next Wallet", "**** **** **** 9981", "9981", "VISA", "CREDIT", "12/30", DEFAULT_CARD_LIMIT_CENTS, 243900, DEFAULT_CARD_LIMIT_CENTS - 243900, "ACTIVE", true, "purple_black", true),
-        CardDto("card_02", "product_graphite", "Usuário Next Wallet", "**** **** **** 1234", "1234", "MASTERCARD", "CREDIT", "11/29", DEFAULT_CARD_LIMIT_CENTS, 89500, DEFAULT_CARD_LIMIT_CENTS - 89500, "ACTIVE", false, "graphite", true),
-        CardDto("card_03", "product_blue", "Usuário Next Wallet", "**** **** **** 4509", "4509", "ELO", "DEBIT_CREDIT", "07/28", DEFAULT_CARD_LIMIT_CENTS, 6200, DEFAULT_CARD_LIMIT_CENTS - 6200, "BLOCKED", false, "blue_dark", true),
+        CardDto("card_01", "product_black", "Italo Rocha", "**** **** **** 9981", "9981", "VISA", "CREDIT", "12/30", DEFAULT_CARD_LIMIT_CENTS, 243900, DEFAULT_CARD_LIMIT_CENTS - 243900, "ACTIVE", true, "purple_black", true),
+        CardDto("card_02", "product_graphite", "Italo Rocha", "**** **** **** 1234", "1234", "MASTERCARD", "CREDIT", "11/29", DEFAULT_CARD_LIMIT_CENTS, 89500, DEFAULT_CARD_LIMIT_CENTS - 89500, "ACTIVE", false, "graphite", true),
+        CardDto("card_03", "product_blue", "Italo Rocha", "**** **** **** 4509", "4509", "ELO", "DEBIT_CREDIT", "07/28", DEFAULT_CARD_LIMIT_CENTS, 6200, DEFAULT_CARD_LIMIT_CENTS - 6200, "BLOCKED", false, "blue_dark", true),
     )
 
     val products = mutableListOf(

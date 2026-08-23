@@ -22,6 +22,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -46,6 +47,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nexcard.nextwallet.R
 import com.nexcard.nextwallet.ui.components.AppIcon
 import com.nexcard.nextwallet.ui.components.AuthIcons
+import com.nexcard.nextwallet.ui.theme.darkAwareTextColor
 
 @Composable
 fun LoginScreen(
@@ -54,6 +56,8 @@ fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val appBackground = MaterialTheme.colorScheme.background
+    val containerSurface = MaterialTheme.colorScheme.surface
 
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
@@ -67,7 +71,7 @@ fun LoginScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF3F3F6))
+            .background(appBackground)
             .padding(10.dp),
         contentAlignment = Alignment.Center,
     ) {
@@ -81,7 +85,7 @@ fun LoginScreen(
                 )
                 .fillMaxSize()
                 .clip(RoundedCornerShape(size = 50.dp))
-                .background(color = Color(0xFFFFFFFF)),
+                .background(color = containerSurface),
         ) {
             val topGap = (maxHeight * 0.11f).coerceIn(52.dp, 110.dp)
             val titleToSocialGap = (maxHeight * 0.10f).coerceIn(40.dp, 92.dp)
@@ -102,7 +106,7 @@ fun LoginScreen(
                 Text(
                     text = stringResource(R.string.welcome_next_wallet),
                     modifier = Modifier.fillMaxWidth(),
-                    color = Color(0xFF2E1A62),
+                    color = darkAwareTextColor(Color(0xFF2E1A62)),
                     fontSize = 34.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,

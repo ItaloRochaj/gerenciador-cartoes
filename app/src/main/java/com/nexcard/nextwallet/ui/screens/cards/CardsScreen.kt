@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,6 +38,7 @@ import com.nexcard.nextwallet.ui.components.AppIcon
 import com.nexcard.nextwallet.ui.components.EmptyContent
 import com.nexcard.nextwallet.ui.components.ErrorContent
 import com.nexcard.nextwallet.ui.components.LoadingContent
+import com.nexcard.nextwallet.ui.theme.darkAwareTextColor
 import com.nexcard.nextwallet.ui.util.resolveCardAssetPath
 import com.nexcard.nextwallet.util.ScreenLoadState
 
@@ -51,6 +53,8 @@ fun CardsScreen(
     viewModel: CardsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val appBackground = MaterialTheme.colorScheme.background
+    val containerSurface = MaterialTheme.colorScheme.surface
 
     when (val loadState = state.loadState) {
         ScreenLoadState.Loading -> LoadingContent(modifier = Modifier.fillMaxSize())
@@ -60,14 +64,14 @@ fun CardsScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xFFF3F3F6))
+                    .background(appBackground)
                     .padding(10.dp),
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .clip(RoundedCornerShape(50.dp))
-                        .background(Color.White)
+                        .background(containerSurface)
                         .padding(horizontal = 24.dp, vertical = 18.dp),
                 ) {
                     Spacer(modifier = Modifier.height(8.dp))
@@ -98,7 +102,7 @@ fun CardsScreen(
                     Text(
                         text = "Seus Cartões",
                         modifier = Modifier.fillMaxWidth(),
-                        color = Color(0xFF21195B),
+                        color = darkAwareTextColor(Color(0xFF21195B)),
                         fontSize = 36.sp,
                         lineHeight = 36.sp,
                         fontWeight = FontWeight.Bold,
