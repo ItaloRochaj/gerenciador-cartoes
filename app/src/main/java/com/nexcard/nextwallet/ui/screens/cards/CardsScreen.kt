@@ -1,41 +1,39 @@
 package com.nexcard.nextwallet.ui.screens.cards
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nexcard.nextwallet.R
-import com.nexcard.nextwallet.ui.components.AppTopBar
-import com.nexcard.nextwallet.ui.components.ConfirmationDialog
+import com.nexcard.nextwallet.ui.components.AppIcon
 import com.nexcard.nextwallet.ui.components.EmptyContent
 import com.nexcard.nextwallet.ui.components.ErrorContent
 import com.nexcard.nextwallet.ui.components.LoadingContent
-import com.nexcard.nextwallet.ui.components.NextWalletCard
 import com.nexcard.nextwallet.util.ScreenLoadState
 
 @Composable
@@ -43,58 +41,132 @@ fun CardsScreen(
     onBack: () -> Unit,
     onCardClick: (String) -> Unit,
     onAddCard: () -> Unit,
+    onGoCards: () -> Unit,
+    onGoFinancial: () -> Unit,
+    onGoSettings: () -> Unit,
     viewModel: CardsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    Column(modifier = Modifier.fillMaxSize()) {
-        AppTopBar(title = stringResource(R.string.your_cards), onBack = onBack)
-        when (val loadState = state.loadState) {
-            ScreenLoadState.Loading -> LoadingContent(modifier = Modifier.fillMaxSize())
-            is ScreenLoadState.Error -> ErrorContent(loadState.message, viewModel::refresh)
-            ScreenLoadState.Empty -> EmptyContent(stringResource(R.string.no_cards), stringResource(R.string.request_card), onAddCard)
-            else -> {
-                LazyColumn(
-                    modifier = Modifier.weight(1f).padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+
+    when (val loadState = state.loadState) {
+        ScreenLoadState.Loading -> LoadingContent(modifier = Modifier.fillMaxSize())
+        is ScreenLoadState.Error -> ErrorContent(loadState.message, viewModel::refresh)
+        ScreenLoadState.Empty -> EmptyContent(stringResource(R.string.no_cards), stringResource(R.string.request_card), onAddCard)
+        else -> {
+            val cardIds = state.cards.map { it.id }
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(0xFFF3F3F6))
+                    .padding(10.dp),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(50.dp))
+                        .background(Color.White)
+                        .padding(horizontal = 24.dp, vertical = 18.dp),
                 ) {
-                    item {
-                        Text(stringResource(R.string.your_cards), style = MaterialTheme.typography.headlineSmall, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
+                    Spacer(modifier = Modifier.height(14.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .size(32.dp)
+                            .clip(CircleShape)
+                            .clickable(onClick = onBack),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        AppIcon(
+                            iconPath = "images/arrow-circle-left.png",
+                            contentDescription = stringResource(R.string.back),
+                            modifier = Modifier.fillMaxSize(),
+                        )
                     }
-                    items(state.cards, key = { it.id }) { card ->
-                        AnimatedVisibility(visible = true) {
-                            Column {
-                                NextWalletCard(card = card, modifier = Modifier.animateItem())
-                                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                                    IconButton(onClick = { viewModel.toggleFavorite(card.id, !card.isFavorite) }) {
-                                        Icon(
-                                            imageVector = if (card.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                                            contentDescription = stringResource(R.string.favorite),
-                                        )
-                                    }
-                                    IconButton(onClick = { onCardClick(card.id) }) {
-                                        Icon(Icons.Default.ChevronRight, contentDescription = stringResource(R.string.open_details))
-                                    }
-                                    IconButton(onClick = { viewModel.askDelete(card.id) }) {
-                                        Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.remove_card))
-                                    }
-                                }
-                            }
-                        }
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    Text(
+                        text = "Seus Cartões",
+                        modifier = Modifier.fillMaxWidth(),
+                        color = Color(0xFF21195B),
+                        fontSize = 36.sp,
+                        lineHeight = 36.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
+
+                    Spacer(modifier = Modifier.height(14.dp))
+
+                    CardsImageItem("cards/Cart  Geometric  34.png") { onCardClick(cardIds.getOrElse(0) { "card_01" }) }
+                    Spacer(modifier = Modifier.height(14.dp))
+                    CardsImageItem("cards/Cart 25.png") { onCardClick(cardIds.getOrElse(1) { "card_02" }) }
+                    Spacer(modifier = Modifier.height(14.dp))
+                    CardsImageItem("cards/Cart 24.jpg") { onCardClick(cardIds.getOrElse(2) { "card_03" }) }
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(72.dp)
+                            .clip(RoundedCornerShape(24.dp))
+                            .background(Color(0xFF31105A))
+                            .padding(horizontal = 20.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        BottomBarIcon(iconPath = "icons/wallet-2.png", onClick = onGoCards)
+                        BottomBarIcon(iconPath = "icons/transactions/chart-2.png", onClick = onGoFinancial)
+                        BottomBarIcon(iconPath = "icons/notification-bing.png", onClick = {})
+                        BottomBarIcon(iconPath = "icons/setting.png", onClick = onGoSettings)
                     }
-                }
-                FloatingActionButton(onClick = onAddCard, modifier = Modifier.padding(16.dp)) {
-                    Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_card))
+
+                    Spacer(modifier = Modifier.height(6.dp))
                 }
             }
         }
     }
+}
 
-    if (state.deletingCardId != null) {
-        ConfirmationDialog(
-            title = stringResource(R.string.confirm_remove),
-            message = stringResource(R.string.remove_card_message),
-            onConfirm = viewModel::deleteConfirmed,
-            onDismiss = viewModel::clearDeleteRequest,
+@Composable
+private fun CardsImageItem(
+    path: String,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1.86f)
+            .clip(RoundedCornerShape(24.dp))
+            .clickable(onClick = onClick),
+    ) {
+        AppIcon(
+            iconPath = path,
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.FillBounds,
+        )
+    }
+}
+
+@Composable
+private fun BottomBarIcon(
+    iconPath: String,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .size(46.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(Color.Transparent)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        AppIcon(
+            iconPath = iconPath,
+            contentDescription = null,
+            modifier = Modifier.size(30.dp),
         )
     }
 }
