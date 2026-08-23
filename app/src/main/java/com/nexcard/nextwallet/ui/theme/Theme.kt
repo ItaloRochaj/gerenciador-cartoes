@@ -5,6 +5,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import com.nexcard.nextwallet.domain.model.ThemeMode
 
 private val Light = lightColorScheme(
@@ -38,9 +40,11 @@ fun NextWalletTheme(
         ThemeMode.LIGHT -> false
         ThemeMode.DARK -> true
     }
+    val context = LocalContext.current
+    val typography = remember(context) { appTypography(context) }
     MaterialTheme(
         colorScheme = if (dark) Dark else Light,
-        typography = AppTypography,
+        typography = typography,
         content = content,
     )
 }
