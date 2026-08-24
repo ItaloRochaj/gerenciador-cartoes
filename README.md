@@ -188,7 +188,7 @@ app/src/main/java/com/nexcard/nextwallet/
 
 ```text
 docs/screenshots/
-├── home.png            ![](https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/home.jpeg)
+├── home.png            ![](https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/cartoes.jpeg)
 ├── cards.png           ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/cartoes.jpeg)
 ├── financial.png       ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/limites.jpeg)
 ├── consolidated.png    ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/consolidadofatura.jpeg)
