@@ -184,21 +184,21 @@ app/src/main/java/com/nexcard/nextwallet/
 
 ![Preview do app no emulador](emulator_screen.png)
 
-### Sugestao de galeria para avaliacao
+### Sugestão de galeria para avaliação
 
 > Adicione as imagens abaixo conforme for capturando cada fluxo principal.
 
 ```text
 docs/screenshots/
-|- home.png https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/home.jpeg
-|- cards.png https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/cartoes.jpeg
-|- financial.png https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/limites.jpeg
-|- consolidated.png https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/consolidadofatura.jpeg
-|- add-card.png https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/novocartao.jpeg
-|- card-detail.png https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/cvv.jpeg
-|- card.png https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/destalhescartao.jpeg
-|- settings.png https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/perfil.jpeg
-```
+├── home.png            -> https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/home.jpeg
+├── cards.png           -> https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/cartoes.jpeg
+├── financial.png       -> https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/limites.jpeg
+├── consolidated.png    -> https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/consolidadofatura.jpeg
+├── add-card.png        -> https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/novocartao.jpeg
+├── card-detail.png     -> https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/cvv.jpeg
+├── card.png            -> https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/destalhescartao.jpeg
+└── settings.png        -> https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/perfil.jpeg
+
 
 ---
 ## Como Executar
