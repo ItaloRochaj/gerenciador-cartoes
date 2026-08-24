@@ -43,12 +43,12 @@ Projeto estruturado em **MVVM**, separando UI, regras de negocio e dados.
 
 ```mermaid
 flowchart TD
-    UI[Compose UI] --> VM[ViewModel + StateFlow]
-    VM --> UC[UseCases]
-    UC --> REPO[Repository Interfaces]
-    REPO --> DATA[Repository Implementations]
-    DATA --> REMOTE[Retrofit + MockApiInterceptor]
-    DATA --> LOCAL[Room + DataStore]
+    UI[Compose UI] -![]VM[ViewModel + StateFlow]
+    VM -![]UC[UseCases]
+    UC -![]REPO[Repository Interfaces]
+    REPO -![]DATA[Repository Implementations]
+    DATA -![]REMOTE[Retrofit + MockApiInterceptor]
+    DATA -![]LOCAL[Room + DataStore]
 ```
 
 ### Camadas principais
@@ -75,19 +75,19 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    A[session check] --> B[login]
-    B --> C[signup]
-    B --> D[home]
-    C --> B
-    D --> E[cards]
-    D --> F[financial]
-    D --> G[consolidated]
-    D --> H[settings]
-    E --> I[card_detail/{cardId}]
-    E --> J[add_card]
-    F --> G
-    F --> J
-    H --> B
+    A[session check] -![]B[login]
+    B -![]C[signup]
+    B -![]D[home]
+    C -![]B
+    D -![]E[cards]
+    D -![]F[financial]
+    D -![]G[consolidated]
+    D -![]H[settings]
+    E -![]I[card_detail/{cardId}]
+    E -![]J[add_card]
+    F -![]G
+    F -![]J
+    H -![]B
 ```
 
 ---
@@ -182,22 +182,20 @@ app/src/main/java/com/nexcard/nextwallet/
 
 ### Preview atual
 
-![Preview do app no emulador](emulator_screen.png)
-
 ### Sugestão de galeria para avaliação
 
 > Adicione as imagens abaixo conforme for capturando cada fluxo principal.
 
 ```text
 docs/screenshots/
-├── home.png            -> https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/home.jpeg
-├── cards.png           -> https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/cartoes.jpeg
-├── financial.png       -> https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/limites.jpeg
-├── consolidated.png    -> https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/consolidadofatura.jpeg
-├── add-card.png        -> https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/novocartao.jpeg
-├── card-detail.png     -> https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/cvv.jpeg
-├── card.png            -> https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/destalhescartao.jpeg
-└── settings.png        -> https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/perfil.jpeg
+├── home.png            ![](https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/home.jpeg)
+├── cards.png           ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/cartoes.jpeg)
+├── financial.png       ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/limites.jpeg)
+├── consolidated.png    ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/consolidadofatura.jpeg)
+├── add-card.png        ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/novocartao.jpeg)
+├── card-detail.png     ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/cvv.jpeg)
+├── card.png            ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/destalhescartao.jpeg)
+└── settings.png        ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/perfil.jpeg)
 
 
 ---
