@@ -186,16 +186,24 @@ app/src/main/java/com/nexcard/nextwallet/
 
 > Adicione as imagens abaixo conforme for capturando cada fluxo principal.
 
-```text
-docs/screenshots/
-├── home.png            ![](https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/cartoes.jpeg)
-├── cards.png           ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/cartoes.jpeg)
-├── financial.png       ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/limites.jpeg)
-├── consolidated.png    ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/consolidadofatura.jpeg)
-├── add-card.png        ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/novocartao.jpeg)
-├── card-detail.png     ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/cvv.jpeg)
-├── card.png            ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/destalhescartao.jpeg)
-└── settings.png        ![]https://github.com/ItaloRochaj/gerenciador-cartoes/blob/main/telas%20da%20aplicacao/perfil.jpeg)
+#### Cartões
+!ttps://raw.githubusercontent.com/ItaloRochaj/gerenciador-cartoes/main/telas%20da%20aplicacao/cartoes.jpeg
+
+#### Limites
+https://raw.githubusercontent.com/ItaloRochaj/gerenciador-cartoes/main/telas%20da%20aplicacao/limites.jpeg
+
+#### Consolidado da Fatura
+https://raw.githubusercontent.com/ItaloRochaj/gerenciador-cartoes/main/telas%20da%20aplicacao/consolidadofatura.jpeg
+
+#### Novo Cartão
+![](https://raw.githubusercontent.com/ItaloRochaj/gerenciador-cartoes/main/telas%20da%20aplicacao/novocartao.jpeg)# CVV
+https://raw.githubusercontent.com/ItaloRochaj/gerenciador-cartoes/main/telas%20da%20aplicacao/cvv.jpeg
+
+#### Detalhes do Cartão
+https://raw.githubusercontent.com/ItaloRochaj/gerenciador-cartoes/main/telas%20da%20aplicacao/destalhescartao.jpeg
+
+#### Perfil
+https://raw.githubusercontent.com/ItaloRochaj/gerenciador-cartoes/main/telas%20da%20aplicacao/perfil.jpeg
 
 
 ---
